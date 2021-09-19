@@ -8,6 +8,7 @@ const isProduction = process.env.NODE_ENV == 'production';
 const config = {
   entry: {
     popup: './src/popup/popup.ts',
+    controller: './src/controller/controller.ts',
     worker: './src/worker/worker.ts',
     content: './src/content/content.ts',
   },

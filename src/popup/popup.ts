@@ -1,3 +1,4 @@
+import '../common.scss';
 import './popup.scss';
 import './init';
 import {addEvent} from './events';
