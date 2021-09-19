@@ -1,6 +1,6 @@
 {
   "name": "chrome-extension-bouquet",
-  "description": "Arrange all tabs of the currently open window in one screen.",
+  "description": "Arrange all tabs of the currently open window in screen.",
   "version": "0.1.0",
   "dependencies": {
     "@types/chrome": "^0.0.147",
