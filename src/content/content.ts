@@ -52,4 +52,5 @@ chrome.runtime.onMessage.addListener(({windowType}) => {
 // workerに読み込みが始まったことを通知する
 chrome.runtime.sendMessage({
   message: 'loadstart',
+  availWidth: window.screen.availWidth,
 });
