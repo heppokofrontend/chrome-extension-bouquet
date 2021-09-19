@@ -37,35 +37,49 @@ export const calc = async (windowId: number) => {
     length === 3
   ) {
     STATE.cols = length;
-
-    return;
-  }
-
-  const divisors = (() => {
-    let result = getDivisors(length);
-
-    while (result.length === 2) {
-      length++;
-      result = getDivisors(length);
-    }
-
-    return result;
-  })();
-
-  // 奇数の場合は中央値を行数と列数に設定する
-  if (divisors.length % 2 !== 0) {
-    const center = divisors.slice(((divisors.length + 1) / 2) - 1)[0];
-
-    STATE.cols = center;
-    STATE.rows = center;
   } else {
-    // 偶数の場合は中央値2つを抽出し、大きいほうを列数とする
-    const centerIndex = divisors.length / 2 - 1;
-    const [a, b] = divisors.slice(centerIndex, centerIndex + 2);
+    const divisors = (() => {
+      let result = getDivisors(length);
 
-    STATE.cols = b;
-    STATE.rows = a;
+      while (result.length === 2) {
+        length++;
+        result = getDivisors(length);
+      }
+
+      return result;
+    })();
+
+    // 奇数の場合は中央値を行数と列数に設定する
+    if (divisors.length % 2 !== 0) {
+      const center = divisors.slice(((divisors.length + 1) / 2) - 1)[0];
+
+      STATE.cols = center;
+      STATE.rows = center;
+    } else {
+      // 偶数の場合は中央値2つを抽出し、大きいほうを列数とする
+      const centerIndex = divisors.length / 2 - 1;
+      const [a, b] = divisors.slice(centerIndex, centerIndex + 2);
+
+      STATE.cols = b;
+      STATE.rows = a;
+    }
   }
 
-  table.textContent += JSON.stringify(STATE);
+  table.textContent = '';
+  table.insertAdjacentHTML('beforeend', `
+    <tbody>
+      <tr>
+        <th scope="row">type</th>
+        <td>${STATE.type}</td>
+      </tr>
+      <tr>
+        <th scope="row"><label for="cols">${chrome.i18n.getMessage('cols')}</label></th>
+        <td><input value="${STATE.cols}" type="number" id="cols" /></td>
+      </tr>
+      <tr>
+        <th scope="row"><label for="rows">${chrome.i18n.getMessage('rows')}</label></th>
+        <td><input value="${STATE.rows}" type="number" id="rows" /></td>
+      </tr>
+    </tbody>
+  `);
 };

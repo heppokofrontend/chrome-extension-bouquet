@@ -10,5 +10,11 @@
   },
   "gather": {
     "message": "Gather"
+  },
+  "rows": {
+    "message": "rows"
+  },
+  "cols": {
+    "message": "cols"
   }
 }

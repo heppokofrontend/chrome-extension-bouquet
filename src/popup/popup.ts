@@ -8,7 +8,12 @@ import {calc} from './calc';
   const win = await chrome.windows.getCurrent();
 
   if (typeof win.id === 'number') {
-    addEvent(win.id);
-    await calc(win.id);
+    /** 複窓の状態を計算して結果を画面に出力する */
+    const calcRender = async () => {
+      await calc(win.id!);
+    };
+
+    addEvent(win.id, calcRender);
+    calcRender();
   }
 })();

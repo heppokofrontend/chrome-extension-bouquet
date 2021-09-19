@@ -10,5 +10,11 @@
   },
   "gather": {
     "message": "複窓解除"
+  },
+  "rows": {
+    "message": "行数"
+  },
+  "cols": {
+    "message": "列数"
   }
 }
