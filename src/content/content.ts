@@ -40,22 +40,32 @@ const cssText = `
 
 // YouTubeの複窓用
 // workerから受け取ったwindowTypeがpopupだったとき、CSSを読み込む
-chrome.runtime.onMessage.addListener(({windowType}) => {
+chrome.runtime.onMessage.addListener((message) => {
+  // console.log(message);
+
   if (!document.URL.startsWith('https://www.youtube.com/watch')) {
     return;
   }
 
-  // popupだった場合、調整のCSSを挿入する
-  if (windowType === 'popup') {
-    const style = document.createElement('style');
+  switch (message.task) {
+    case 'pageload':
+      // popupだった場合、調整のCSSを挿入する
+      if (message.windowType === 'popup') {
+        const style = document.createElement('style');
 
-    style.textContent = cssText;
-    document.head.append(style);
+        style.textContent = cssText;
+        document.head.append(style);
+      }
+
+      window.scroll({
+        top: 0,
+      });
+
+      break;
+
+    default:
+      break;
   }
-
-  window.scroll({
-    top: 0,
-  });
 });
 
 /** workerに読み込みが始まったことを通知する */

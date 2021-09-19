@@ -20,6 +20,7 @@ chrome.runtime.onMessage.addListener(async ({
   const {type} = await chrome.windows.get(sender.tab?.windowId);
 
   chrome.tabs.sendMessage(sender.tab.id, {
+    task: 'pageload',
     windowType: type,
   });
 
@@ -52,9 +53,10 @@ chrome.runtime.onConnect.addListener((port) => {
           Math.ceil(options.availHeight / rows) :
           Math.ceil(width * aspectRatio + 39 + 140), // タイトルバー＋その他UI
       };
+      const hasYoutubeTab = tabs.some((tab) => tab.url?.startsWith('https://www.youtube.com/watch'));
 
       // YouTubeを含んでいたらコントローラーを表示する
-      if (tabs.some((tab) => tab.url?.startsWith('https://www.youtube.com/watch'))) {
+      if (hasYoutubeTab) {
         const controller = await chrome.windows.create({
           url: './controller.html',
           type: 'popup',
@@ -65,7 +67,8 @@ chrome.runtime.onConnect.addListener((port) => {
         controller.alwaysOnTop = true;
       }
 
-      tabs.forEach((tab) => {
+      // 複窓
+      for (const tab of tabs) {
         if (typeof tab.id === 'number') {
           console.log(state);
 
@@ -88,7 +91,7 @@ chrome.runtime.onConnect.addListener((port) => {
             state.top = 0;
           }
         }
-      });
+      }
     })();
   });
 });
