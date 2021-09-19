@@ -12,12 +12,13 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.youtube.com/watch*"],
+      "matches": ["<all_urls>"],
       "js": ["content.js"]
     }
   ],
   "permissions": [
-    "tabs"
+    "tabs",
+    "storage"
   ],
   "icons": {
     "128": "icon.png"

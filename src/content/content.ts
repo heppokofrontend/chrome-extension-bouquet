@@ -6,7 +6,7 @@ const cssText = `
   }
 
   ytd-app:not([use-content-visibility]) #page-manager.ytd-app {
-    margin-top: 0 !important;
+    margin-top: 10px !important;
   }
 
   :hover ytd-masthead,
@@ -38,8 +38,13 @@ const cssText = `
 }
 `;
 
+// YouTubeの複窓用
 // workerから受け取ったwindowTypeがpopupだったとき、CSSを読み込む
 chrome.runtime.onMessage.addListener(({windowType}) => {
+  if (!document.URL.startsWith('https://www.youtube.com/watch')) {
+    return;
+  }
+
   // popupだった場合、調整のCSSを挿入する
   if (windowType === 'popup') {
     const style = document.createElement('style');
@@ -47,10 +52,20 @@ chrome.runtime.onMessage.addListener(({windowType}) => {
     style.textContent = cssText;
     document.head.append(style);
   }
+
+  window.scroll({
+    top: 0,
+  });
 });
 
-// workerに読み込みが始まったことを通知する
-chrome.runtime.sendMessage({
-  message: 'loadstart',
-  availWidth: window.screen.availWidth,
-});
+/** workerに読み込みが始まったことを通知する */
+const sendToWorker = () => {
+  chrome.runtime.sendMessage({
+    message: 'loadstart',
+    availWidth: window.screen.availWidth,
+    availHeight: window.screen.availHeight,
+  });
+};
+
+sendToWorker();
+window.addEventListener('focus', sendToWorker);

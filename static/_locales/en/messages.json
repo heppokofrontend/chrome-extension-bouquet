@@ -1,0 +1,11 @@
+{
+  "extName": {
+    "message": "Bouquet"
+  },
+  "extDesc": {
+    "message": "Arrange all tabs of the currently open window in one screen."
+  },
+  "button": {
+    "message": "Run"
+  }
+}
