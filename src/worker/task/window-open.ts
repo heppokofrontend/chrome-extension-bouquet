@@ -5,6 +5,7 @@ type Data = {
   cols: number,
   availWidth: number,
   availHeight: number,
+  targets: number[],
 };
 
 /**
@@ -12,7 +13,7 @@ type Data = {
  * @param data - 窓を作るときの情報
  */
 export const windowOpen = (data: Data) => {
-  const {windowId, type, rows, cols, ...options} = data;
+  const {windowId, type, rows, cols, targets, ...options} = data;
   /** これから開くウィンドウの種別がpopupであるかどうか */
   const isPopup = type === 'popup';
 

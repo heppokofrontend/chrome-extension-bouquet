@@ -42,6 +42,7 @@ chrome.runtime.onConnect.addListener((port) => {
         windowOpen({
           ...data,
           ...options,
+          targets,
         });
 
         break;
@@ -51,6 +52,7 @@ chrome.runtime.onConnect.addListener((port) => {
           for (const id of targets) {
             chrome.tabs.sendMessage(id, {
               task,
+              data,
             });
           }
         }

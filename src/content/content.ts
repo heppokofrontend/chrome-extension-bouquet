@@ -1,4 +1,5 @@
 import {cssText} from './cssText';
+import {run} from './youtube-task';
 
 chrome.runtime.onMessage.addListener((message) => {
   // YouTube窓用のタスク
@@ -16,27 +17,11 @@ chrome.runtime.onMessage.addListener((message) => {
 
         break;
 
-      case 'youtube-play':
-        console.log(message.task);
-
-        break;
-
-      case 'youtube-pause':
-        console.log(message.task);
-
-        break;
-
-      case 'youtube-stop':
-        console.log(message.task);
-
-        break;
-
-      case 'youtube-volume':
-        console.log(message.task);
-
-        break;
-
       default:
+        if (message.task.startsWith('youtube-')) {
+          run(message.task, message.data);
+        }
+
         break;
     }
   }
