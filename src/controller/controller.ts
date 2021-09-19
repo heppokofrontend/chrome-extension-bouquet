@@ -1,5 +1,6 @@
 import '../common.scss';
 import './controller.scss';
+import '../i18n';
 
 const port = chrome.runtime.connect();
 const nowVolume = document.querySelector<HTMLSpanElement>('#now-volume')!;
