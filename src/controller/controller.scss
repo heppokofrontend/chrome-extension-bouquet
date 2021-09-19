@@ -2,6 +2,11 @@ body {
   padding: 10px;
 }
 
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
 h1 {
   margin: 0 0 10px;
   font-size: 18px;
@@ -28,9 +33,9 @@ div {
     padding: 0 0 0 4px;
     margin: 0;
   }
-}
 
-button {
-  width: 100%;
-  padding: 32px 10px;
+  button {
+    width: 100%;
+    padding: 32px 10px;
+  }
 }

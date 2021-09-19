@@ -1,9 +1,11 @@
 import {windowOpen} from './task/window-open';
+import {gather} from './task/gather';
 
 const options = {
   availWidth: 0,
   availHeight: 0,
 };
+/** このツールで立ち上げた窓のタブID */
 const targets: number[] = [];
 
 // ページの読み込みが始まった時にcontent.tsにwindowTypeを連絡する
@@ -33,7 +35,7 @@ chrome.runtime.onMessage.addListener(async ({
 
 // popupからpostMessageを受け取ったら複窓を展開する
 chrome.runtime.onConnect.addListener((port) => {
-  port.onMessage.addListener(({task, data}: {
+  port.onMessage.addListener(async ({task, data}: {
     task: string,
     data: any,
   }) => {
@@ -44,6 +46,12 @@ chrome.runtime.onConnect.addListener((port) => {
           ...options,
           targets,
         });
+
+        break;
+
+      case 'gather':
+        await gather(targets);
+        targets.length = 0;
 
         break;
 

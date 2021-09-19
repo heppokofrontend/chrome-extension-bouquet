@@ -3,9 +3,10 @@ import './controller.scss';
 import '../i18n';
 
 const port = chrome.runtime.connect();
+const gather = document.querySelector<HTMLButtonElement>('#gather');
 const nowVolume = document.querySelector<HTMLSpanElement>('#now-volume')!;
 const volume = document.querySelector<HTMLInputElement>('#volume');
-const btns = document.querySelectorAll<HTMLButtonElement>('button');
+const btns = document.querySelectorAll<HTMLButtonElement>('main button');
 /**
  * クリックイベントハンドラ
  * @param this - クリックされたボタン
@@ -15,6 +16,15 @@ const onclick = function(this: HTMLButtonElement) {
     task: `youtube-${this.id}`,
   });
 };
+
+// 複窓解除
+gather?.addEventListener('click', () => {
+  port.postMessage({
+    task: 'gather',
+  });
+
+  window.close();
+});
 
 // 音量調整
 volume?.addEventListener('change', () => {

@@ -38,18 +38,6 @@ export const windowOpen = (data: Data) => {
     };
     const hasYoutubeTab = tabs.some((tab) => tab.url?.startsWith('https://www.youtube.com/watch'));
 
-    // YouTubeを含んでいたらコントローラーを表示する
-    if (hasYoutubeTab) {
-      const controller = await chrome.windows.create({
-        url: './controller.html',
-        type: 'popup',
-        width: 300,
-        height: 230,
-      });
-
-      controller.alwaysOnTop = true;
-    }
-
     // 複窓
     for (const tab of tabs) {
       if (typeof tab.id === 'number') {
@@ -78,6 +66,18 @@ export const windowOpen = (data: Data) => {
           state.top = 0;
         }
       }
+    }
+
+    // YouTubeを含んでいたらコントローラーを表示する
+    if (hasYoutubeTab) {
+      const controller = await chrome.windows.create({
+        url: './controller.html',
+        type: 'popup',
+        width: 300,
+        height: 230,
+      });
+
+      controller.alwaysOnTop = true;
     }
   })();
 };
