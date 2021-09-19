@@ -38,33 +38,47 @@ const cssText = `
 }
 `;
 
-// YouTubeの複窓用
-// workerから受け取ったwindowTypeがpopupだったとき、CSSを読み込む
 chrome.runtime.onMessage.addListener((message) => {
-  // console.log(message);
+  // YouTube窓用のタスク
+  if (document.URL.startsWith('https://www.youtube.com/watch')) {
+    switch (message.task) {
+      // workerから受け取ったwindowTypeがpopupだったとき、CSSを読み込む
+      case 'pageload':
+        // popupだった場合、調整のCSSを挿入する
+        if (message.windowType === 'popup') {
+          const style = document.createElement('style');
 
-  if (!document.URL.startsWith('https://www.youtube.com/watch')) {
-    return;
+          style.textContent = cssText;
+          document.head.append(style);
+        }
+
+        break;
+
+      case 'youtube-play':
+
+        break;
+
+      case 'youtube-pause':
+
+        break;
+
+      case 'youtube-stop':
+
+        break;
+
+      case 'youtube-volume':
+
+        break;
+
+      default:
+        break;
+    }
   }
 
-  switch (message.task) {
-    case 'pageload':
-      // popupだった場合、調整のCSSを挿入する
-      if (message.windowType === 'popup') {
-        const style = document.createElement('style');
-
-        style.textContent = cssText;
-        document.head.append(style);
-      }
-
-      window.scroll({
-        top: 0,
-      });
-
-      break;
-
-    default:
-      break;
+  if (message.task === 'pageload') {
+    window.scroll({
+      top: 0,
+    });
   }
 });
 

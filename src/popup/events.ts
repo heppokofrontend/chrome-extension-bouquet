@@ -12,8 +12,11 @@ export const addEvent = (windowId: number) => {
   // 複窓
   btn.addEventListener('click', async () => {
     port.postMessage({
-      windowId,
-      ...STATE,
+      task: 'windowOpen',
+      data: {
+        windowId,
+        ...STATE,
+      },
     });
   });
 
