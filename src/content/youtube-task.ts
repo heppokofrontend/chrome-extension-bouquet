@@ -28,7 +28,7 @@ export const run = (name: string, data: any) => {
       break;
 
     case 'youtube-volume':
-      if (data.volume) {
+      if (typeof data.volume === 'number') {
         video.volume = data.volume;
       }
 
