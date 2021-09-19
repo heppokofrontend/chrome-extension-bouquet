@@ -15,15 +15,6 @@ export const addEvent = (windowId: number) => {
       windowId,
       ...STATE,
     });
-
-    const controller = await chrome.windows.create({
-      url: './controller.html',
-      type: 'popup',
-      width: 300,
-      height: 230,
-    });
-
-    controller.alwaysOnTop = true;
   });
 
   // popupモードかどうか

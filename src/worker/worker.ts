@@ -53,6 +53,18 @@ chrome.runtime.onConnect.addListener((port) => {
           Math.ceil(width * aspectRatio + 39 + 140), // タイトルバー＋その他UI
       };
 
+      // YouTubeを含んでいたらコントローラーを表示する
+      if (tabs.some((tab) => tab.url?.startsWith('https://www.youtube.com/watch'))) {
+        const controller = await chrome.windows.create({
+          url: './controller.html',
+          type: 'popup',
+          width: 300,
+          height: 230,
+        });
+
+        controller.alwaysOnTop = true;
+      }
+
       tabs.forEach((tab) => {
         if (typeof tab.id === 'number') {
           console.log(state);
