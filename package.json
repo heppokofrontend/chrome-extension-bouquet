@@ -1,6 +1,6 @@
 {
   "name": "chrome-extension-bouquet",
-  "description": "Break apart the tabs as some  windows, and arrange them on the current screen.",
+  "description": "Arrange all tabs of the currently open window in one screen.",
   "version": "0.1.0",
   "dependencies": {
     "@types/chrome": "^0.0.147",
