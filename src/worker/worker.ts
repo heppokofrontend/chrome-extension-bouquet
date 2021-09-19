@@ -29,7 +29,7 @@ chrome.runtime.onMessage.addListener(async ({
 
 // popupからpostMessageを受け取ったら複窓を展開する
 chrome.runtime.onConnect.addListener((port) => {
-  port.onMessage.addListener(({windowId, type}) => {
+  port.onMessage.addListener(({windowId, type, rows, cols}) => {
     /** これから開くウィンドウの種別がpopupであるかどうか */
     const isPopup = type === 'popup';
 
@@ -41,14 +41,16 @@ chrome.runtime.onConnect.addListener((port) => {
       const tabs = await chrome.tabs.query({windowId});
       const availWidth = options.availWidth;
       const availHeight = options.availHeight;
-      const width = Math.ceil(isPopup ? (availWidth / 4) : 500) + 16; // TODO: 計算ロジックが仮
+      const width = Math.ceil(isPopup ? (availWidth / cols) : 500) + 16;
       /** 16 : 9 */
       const aspectRatio = 0.5625;
       const state = {
         top: 0,
         left: 0,
         width: width,
-        height: Math.ceil(width * aspectRatio + 39 + (isPopup ? 0 : 140)), // TODO: 計算ロジックが仮
+        height: isPopup ?
+          Math.ceil(options.availHeight / rows) :
+          Math.ceil(width * aspectRatio + 39 + 140), // タイトルバー＋その他UI
       };
 
       tabs.forEach((tab) => {
