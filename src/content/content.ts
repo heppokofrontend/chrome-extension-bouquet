@@ -43,4 +43,3 @@ const sendToWorker = () => {
 };
 
 sendToWorker();
-window.addEventListener('focus', sendToWorker);
