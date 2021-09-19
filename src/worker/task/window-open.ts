@@ -36,7 +36,8 @@ export const windowOpen = (data: Data) => {
         Math.ceil(options.availHeight / rows) :
         Math.ceil(width * aspectRatio + 39 + 140), // タイトルバー＋その他UI
     };
-    const hasYoutubeTab = tabs.some((tab) => tab.url?.startsWith('https://www.youtube.com/watch'));
+    /** YouTubeのタブを含んでいるか */
+    // const hasYoutubeTab = tabs.some((tab) => tab.url?.startsWith('https://www.youtube.com/watch'));
 
     // 複窓
     for (const tab of tabs) {
@@ -69,15 +70,15 @@ export const windowOpen = (data: Data) => {
     }
 
     // YouTubeを含んでいたらコントローラーを表示する
-    if (hasYoutubeTab) {
-      const controller = await chrome.windows.create({
-        url: './controller.html',
-        type: 'popup',
-        width: 300,
-        height: 230,
-      });
+    // if (hasYoutubeTab) {
+    const controller = await chrome.windows.create({
+      url: './controller.html',
+      type: 'popup',
+      width: 300,
+      height: 290,
+    });
 
-      controller.alwaysOnTop = true;
-    }
+    controller.alwaysOnTop = true;
+    // }
   })();
 };
