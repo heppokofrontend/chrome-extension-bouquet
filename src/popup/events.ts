@@ -13,7 +13,7 @@ export const addEvent = (windowId: number) => {
   btn.addEventListener('click', () => {
     port.postMessage({
       windowId,
-      type: STATE.type,
+      ...STATE,
     });
   });
 
