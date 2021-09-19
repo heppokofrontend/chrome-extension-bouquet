@@ -41,14 +41,14 @@ chrome.runtime.onConnect.addListener((port) => {
       const tabs = await chrome.tabs.query({windowId});
       const availWidth = options.availWidth;
       const availHeight = options.availHeight;
-      const minWidth = Math.ceil(isPopup ? (availWidth / 4) : 500) + 16; // TODO: 計算ロジックが仮
+      const width = Math.ceil(isPopup ? (availWidth / 4) : 500) + 16; // TODO: 計算ロジックが仮
       /** 16 : 9 */
       const aspectRatio = 0.5625;
       const state = {
         top: 0,
         left: 0,
-        width: minWidth,
-        height: Math.ceil(minWidth * aspectRatio + 39 + (isPopup ? 0 : 140)), // TODO: 計算ロジックが仮
+        width: width,
+        height: Math.ceil(width * aspectRatio + 39 + (isPopup ? 0 : 140)), // TODO: 計算ロジックが仮
       };
 
       tabs.forEach((tab) => {
@@ -63,7 +63,7 @@ chrome.runtime.onConnect.addListener((port) => {
 
           chrome.tabs.remove(tab.id);
 
-          state.left += minWidth - 16;
+          state.left += width - 16;
 
           if (availWidth < state.left) {
             state.left = 0;
