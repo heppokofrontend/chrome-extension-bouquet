@@ -1,23 +1,25 @@
 import {STATE} from './state';
 
-const port = chrome.runtime.connect();
-const checkbox = document.querySelector<HTMLInputElement>('#isPopup')!;
-const btn = document.querySelector<HTMLButtonElement>('#run')!;
+/**
+ * イベントリスナーの登録
+ * @param windowId - chrome.windows.getCurrent().windowId
+ */
+export const addEvent = (windowId: number) => {
+  const port = chrome.runtime.connect();
+  const checkbox = document.querySelector<HTMLInputElement>('#isPopup')!;
+  const btn = document.querySelector<HTMLButtonElement>('#run')!;
 
-// 複窓
-(async () => {
-  const win = await chrome.windows.getCurrent();
-
+  // 複窓
   btn.addEventListener('click', () => {
     port.postMessage({
-      windowId: win.id,
+      windowId,
       type: STATE.type,
     });
   });
-})();
 
-// popupモードかどうか
-checkbox.addEventListener('change', () => {
-  STATE.type = checkbox.checked ? 'popup' : 'normal';
-  chrome.storage.local.set(STATE);
-});
+  // popupモードかどうか
+  checkbox.addEventListener('change', () => {
+    STATE.type = checkbox.checked ? 'popup' : 'normal';
+    chrome.storage.local.set(STATE);
+  });
+};

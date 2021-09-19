@@ -1,3 +1,11 @@
 import './popup.scss';
 import './init';
-import './events';
+import {addEvent} from './events';
+
+(async () => {
+  const win = await chrome.windows.getCurrent();
+
+  if (typeof win.id === 'number') {
+    addEvent(win.id);
+  }
+})();
