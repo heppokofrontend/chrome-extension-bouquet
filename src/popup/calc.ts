@@ -62,10 +62,10 @@ export const calc = async (windowId: number) => {
       // 偶数の場合は中央値2つを抽出し、大きいほうを列数とする
       // e.g: [1, 2, 3, 4, 6, 12] -> 4 : 3
       const centerIndex = divisors.length / 2 - 1;
-      const [a, b] = divisors.slice(centerIndex, centerIndex + 2);
+      const [rows, cols] = divisors.slice(centerIndex, centerIndex + 2);
 
-      STATE.cols = b;
-      STATE.rows = a;
+      STATE.cols = cols;
+      STATE.rows = rows;
     }
   }
 
