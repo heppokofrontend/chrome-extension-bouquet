@@ -38,9 +38,11 @@ export const calc = async (windowId: number) => {
   ) {
     STATE.cols = length;
   } else {
+    /** 約数 */
     const divisors = (() => {
       let result = getDivisors(length);
 
+      // 約数が「1」とその数字そのものの場合は、1つ数字を増やして再計算する
       while (result.length === 2) {
         length++;
         result = getDivisors(length);
@@ -50,6 +52,7 @@ export const calc = async (windowId: number) => {
     })();
 
     // 奇数の場合は中央値を行数と列数に設定する
+    // e.g: [1, 3, 9] -> 3 : 3
     if (divisors.length % 2 !== 0) {
       const center = divisors.slice(((divisors.length + 1) / 2) - 1)[0];
 
@@ -57,6 +60,7 @@ export const calc = async (windowId: number) => {
       STATE.rows = center;
     } else {
       // 偶数の場合は中央値2つを抽出し、大きいほうを列数とする
+      // e.g: [1, 2, 3, 4, 6, 12] -> 4 : 3
       const centerIndex = divisors.length / 2 - 1;
       const [a, b] = divisors.slice(centerIndex, centerIndex + 2);
 

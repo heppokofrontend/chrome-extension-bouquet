@@ -2,7 +2,9 @@ import {windowOpen} from './task/window-open';
 import {gather} from './task/gather';
 
 const options = {
+  /** content.jsから受け取るwindow.screen.availWidth */
   availWidth: 0,
+  /** content.jsから受け取るwindow.screen.availHeight */
   availHeight: 0,
 };
 /** このツールで立ち上げた窓のタブID */

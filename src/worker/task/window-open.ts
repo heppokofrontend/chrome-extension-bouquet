@@ -69,7 +69,7 @@ export const windowOpen = (data: Data) => {
       }
     }
 
-    // YouTubeを含んでいたらコントローラーを表示する
+    // // YouTubeを含んでいたらコントローラーを表示する
     // if (hasYoutubeTab) {
     const controller = await chrome.windows.create({
       url: './controller.html',

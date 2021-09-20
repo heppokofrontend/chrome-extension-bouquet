@@ -10,7 +10,7 @@ export const addEvent = (windowId: number, calcRender: () => any) => {
   const checkbox = document.querySelector<HTMLInputElement>('#isPopup')!;
   const btn = document.querySelector<HTMLButtonElement>('#run')!;
 
-  // 複窓
+  // 複窓展開ボタンのClickイベント
   btn.addEventListener('click', async () => {
     const rows = document.querySelector<HTMLInputElement>('#rows')?.value;
     const cols = document.querySelector<HTMLInputElement>('#cols')?.value;
@@ -29,7 +29,7 @@ export const addEvent = (windowId: number, calcRender: () => any) => {
     calcRender();
   });
 
-  // popupモードかどうか
+  // モード切り替えラジオボタンのChangeイベント
   checkbox.addEventListener('change', () => {
     STATE.type = checkbox.checked ? 'popup' : 'normal';
     chrome.storage.local.set(STATE);
