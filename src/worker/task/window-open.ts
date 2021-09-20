@@ -7,6 +7,47 @@ type Data = {
 };
 
 /**
+ * 通常のウィンドウのサイズを計算する
+ * @param tabLength - タブの枚数
+ * @param maxWidth - 画面の横幅
+ * @param maxHeight - 画面の立幅
+ * @return - 通常画面用のサイズ
+ */
+const getNormalWinSize = (
+    tabLength: number,
+    maxWidth: number,
+    maxHeight: number,
+) => {
+  let width = maxWidth / tabLength;
+  let height = maxHeight;
+  let i = tabLength;
+
+  while (width < 500) {
+    i--;
+
+    if (i === 0) {
+      width = 500;
+
+      break;
+    }
+
+    width = maxWidth / i;
+  }
+
+  if (tabLength !== i) {
+    /** 16 : 9 */
+    const aspectRatio = 0.5625;
+
+    height = Math.ceil(width * aspectRatio + 39 + 140); // タイトルバー＋その他UI
+  }
+
+  return {
+    width,
+    height,
+  };
+};
+
+/**
  * 複窓を開く
  * @param data - 窓を作るときの情報
  */
@@ -29,18 +70,21 @@ export const windowOpen = (data: Data) => {
     };
     const maxWidth = screen.maxWidth;
     const maxHeight = screen.maxHeight;
-    const width = Math.ceil(isPopup ? (maxWidth / cols) : 500);
-    /** 16 : 9 */
-    const aspectRatio = 0.5625;
+    const tabs = await chrome.tabs.query({windowId});
+    const {width, height} = isPopup ? {
+      width: (maxWidth / cols),
+      height: Math.ceil(screen.maxHeight / rows),
+    } : getNormalWinSize(
+        tabs.length,
+        screen.maxWidth,
+        screen.maxHeight,
+    );
     const state = {
       top: 0,
       left: 0,
-      width: width,
-      height: isPopup ?
-        Math.ceil(screen.maxHeight / rows) :
-        Math.ceil(width * aspectRatio + 39 + 140), // タイトルバー＋その他UI
+      width,
+      height,
     };
-    const tabs = await chrome.tabs.query({windowId});
 
     // 複窓
     for (const tab of tabs) {
