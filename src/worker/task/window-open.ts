@@ -23,15 +23,13 @@ export const windowOpen = (data: Data) => {
       state: 'maximized',
     });
 
-    const options = {
-      /** content.jsから受け取るwindow.screen.availWidth */
-      availWidth: win.width!,
-      /** content.jsから受け取るwindow.screen.availHeight */
-      availHeight: win.height!,
+    const screen = {
+      maxWidth: win.width!,
+      maxHeight: win.height!,
     };
-    const availWidth = options.availWidth;
-    const availHeight = options.availHeight;
-    const width = Math.ceil(isPopup ? (availWidth / cols) : 500);
+    const maxWidth = screen.maxWidth;
+    const maxHeight = screen.maxHeight;
+    const width = Math.ceil(isPopup ? (maxWidth / cols) : 500);
     /** 16 : 9 */
     const aspectRatio = 0.5625;
     const state = {
@@ -39,7 +37,7 @@ export const windowOpen = (data: Data) => {
       left: 0,
       width: width,
       height: isPopup ?
-        Math.ceil(options.availHeight / rows) :
+        Math.ceil(screen.maxHeight / rows) :
         Math.ceil(width * aspectRatio + 39 + 140), // タイトルバー＋その他UI
     };
     const tabs = await chrome.tabs.query({windowId});
@@ -64,12 +62,12 @@ export const windowOpen = (data: Data) => {
         // 座標計算
         state.left += width;
 
-        if (availWidth < state.left) {
+        if (maxWidth < state.left) {
           state.left = 0;
           state.top += state.height;
         }
 
-        if (availHeight < (state.top + state.height)) {
+        if (maxHeight < (state.top + state.height)) {
           state.top = 0;
         }
       }
