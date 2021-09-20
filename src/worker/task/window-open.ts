@@ -72,7 +72,7 @@ export const windowOpen = (data: Data) => {
     const maxHeight = screen.maxHeight;
     const tabs = await chrome.tabs.query({windowId});
     const {width, height} = isPopup ? {
-      width: (maxWidth / cols),
+      width: Math.ceil(maxWidth / cols),
       height: Math.ceil(screen.maxHeight / rows),
     } : getNormalWinSize(
         tabs.length,
