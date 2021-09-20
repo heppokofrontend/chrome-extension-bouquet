@@ -3,8 +3,6 @@ type Data = {
   type: chrome.windows.createTypeEnum,
   rows: number,
   cols: number,
-  availWidth: number,
-  availHeight: number,
   targets: number[],
 };
 
@@ -13,19 +11,27 @@ type Data = {
  * @param data - 窓を作るときの情報
  */
 export const windowOpen = (data: Data) => {
-  const {windowId, type, rows, cols, targets, ...options} = data;
+  const {windowId, type, rows, cols, targets} = data;
   /** これから開くウィンドウの種別がpopupであるかどうか */
   const isPopup = type === 'popup';
 
-  if (options.availWidth <= 0) {
-    return;
-  }
-
   (async () => {
-    const tabs = await chrome.tabs.query({windowId});
+    const win = await chrome.windows.get(windowId);
+
+    // 窓のサイズを取得するために最大化
+    await chrome.windows.update(windowId, {
+      state: 'maximized',
+    });
+
+    const options = {
+      /** content.jsから受け取るwindow.screen.availWidth */
+      availWidth: win.width!,
+      /** content.jsから受け取るwindow.screen.availHeight */
+      availHeight: win.height!,
+    };
     const availWidth = options.availWidth;
     const availHeight = options.availHeight;
-    const width = Math.ceil(isPopup ? (availWidth / cols) : 500) + 16;
+    const width = Math.ceil(isPopup ? (availWidth / cols) : 500);
     /** 16 : 9 */
     const aspectRatio = 0.5625;
     const state = {
@@ -36,10 +42,12 @@ export const windowOpen = (data: Data) => {
         Math.ceil(options.availHeight / rows) :
         Math.ceil(width * aspectRatio + 39 + 140), // タイトルバー＋その他UI
     };
+    const tabs = await chrome.tabs.query({windowId});
 
     // 複窓
     for (const tab of tabs) {
       if (typeof tab.id === 'number') {
+        /** 複窓用ウィンドウ */
         const win = await chrome.windows.create({
           url: tab.url,
           type,
@@ -54,7 +62,7 @@ export const windowOpen = (data: Data) => {
         chrome.tabs.remove(tab.id);
 
         // 座標計算
-        state.left += width - 16;
+        state.left += width;
 
         if (availWidth < state.left) {
           state.left = 0;

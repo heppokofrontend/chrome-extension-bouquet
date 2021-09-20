@@ -1,23 +1,12 @@
 import {windowOpen} from './task/window-open';
 import {gather} from './task/gather';
 
-const options = {
-  /** content.jsから受け取るwindow.screen.availWidth */
-  availWidth: 0,
-  /** content.jsから受け取るwindow.screen.availHeight */
-  availHeight: 0,
-};
 /** このツールで立ち上げた窓のタブID */
 const targets: number[] = [];
 
 // ページの読み込みが始まった時にcontent.tsにwindowTypeを連絡する
-chrome.runtime.onMessage.addListener(async ({
-  message,
-  availWidth,
-  availHeight,
-}, sender) => {
+chrome.runtime.onMessage.addListener(async (_, sender) => {
   if (
-    message !== 'loadstart' ||
     typeof sender.tab?.id !== 'number' ||
     typeof sender.tab?.windowId !== 'number'
   ) {
@@ -30,9 +19,6 @@ chrome.runtime.onMessage.addListener(async ({
     task: 'pageload',
     windowType: type,
   });
-
-  options.availWidth = availWidth;
-  options.availHeight = availHeight;
 });
 
 // popupからpostMessageを受け取ったら複窓を展開する
@@ -45,7 +31,6 @@ chrome.runtime.onConnect.addListener((port) => {
       case 'windowOpen':
         windowOpen({
           ...data,
-          ...options,
           targets,
         });
 

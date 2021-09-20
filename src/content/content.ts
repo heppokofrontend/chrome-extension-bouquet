@@ -29,14 +29,3 @@ chrome.runtime.onMessage.addListener((message) => {
       break;
   }
 });
-
-/** workerに読み込みが始まったことを通知する */
-const sendToWorker = () => {
-  chrome.runtime.sendMessage({
-    message: 'loadstart',
-    availWidth: window.screen.availWidth,
-    availHeight: window.screen.availHeight,
-  });
-};
-
-sendToWorker();
