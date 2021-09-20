@@ -72,14 +72,17 @@ export const calc = async (windowId: number) => {
         <th scope="row">type</th>
         <td>${STATE.type}</td>
       </tr>
-      <tr>
-        <th scope="row"><label for="cols">${chrome.i18n.getMessage('cols')}</label></th>
-        <td><input value="${STATE.cols}" type="number" id="cols" /></td>
-      </tr>
-      <tr>
-        <th scope="row"><label for="rows">${chrome.i18n.getMessage('rows')}</label></th>
-        <td><input value="${STATE.rows}" type="number" id="rows" /></td>
-      </tr>
+
+      ${STATE.type === 'popup' ? `
+          <tr>
+            <th scope="row"><label for="cols">${chrome.i18n.getMessage('cols')}</label></th>
+            <td><input value="${STATE.cols}" type="number" id="cols" /></td>
+          </tr>
+          <tr>
+            <th scope="row"><label for="rows">${chrome.i18n.getMessage('rows')}</label></th>
+            <td><input value="${STATE.rows}" type="number" id="rows" /></td>
+          </tr>
+        ` : ''}
     </tbody>
   `);
 };

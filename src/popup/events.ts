@@ -12,8 +12,11 @@ export const addEvent = (windowId: number, calcRender: () => any) => {
 
   // 複窓
   btn.addEventListener('click', async () => {
-    STATE.rows = Number(document.querySelector<HTMLInputElement>('#rows')!.value);
-    STATE.cols = Number(document.querySelector<HTMLInputElement>('#cols')!.value);
+    const rows = document.querySelector<HTMLInputElement>('#rows')?.value;
+    const cols = document.querySelector<HTMLInputElement>('#cols')?.value;
+
+    STATE.rows = Number(rows) || STATE.rows;
+    STATE.cols = Number(cols) || STATE.cols;
 
     await port.postMessage({
       task: 'windowOpen',
