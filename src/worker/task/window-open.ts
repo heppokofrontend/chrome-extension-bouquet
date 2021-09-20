@@ -38,12 +38,12 @@ const getNormalWinSize = (
     /** 16 : 9 */
     const aspectRatio = 0.5625;
 
-    height = Math.ceil(width * aspectRatio + 39 + 140); // タイトルバー＋その他UI
+    height = width * aspectRatio + 39 + 140; // タイトルバー＋その他UI
   }
 
   return {
-    width,
-    height,
+    width: Math.ceil(width),
+    height: Math.ceil(height),
   };
 };
 
