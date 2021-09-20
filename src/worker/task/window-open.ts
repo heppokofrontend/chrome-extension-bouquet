@@ -18,8 +18,37 @@ const getNormalWinSize = (
     maxWidth: number,
     maxHeight: number,
 ) => {
-  let width = maxWidth / tabLength;
-  let height = maxHeight;
+  let {width, height} = (() => {
+    if (tabLength < 4) {
+      return {
+        width: maxWidth / tabLength,
+        height: maxHeight,
+      };
+    }
+
+    return {
+      width: maxWidth / tabLength,
+      height: ((): number => {
+        /** 16 : 9 */
+        const aspectRatio = 0.5625;
+        const height = maxWidth / tabLength * aspectRatio + 39 + 140; // タイトルバー＋その他UI
+
+        if (maxHeight / 2 < height) {
+          return height;
+        }
+
+        return maxHeight / 2;
+      })(),
+    };
+  })();
+
+  if (500 < width) {
+    return {
+      width: Math.ceil(width),
+      height: Math.ceil(height),
+    };
+  }
+
   let i = tabLength;
 
   while (width < 500) {
@@ -32,13 +61,6 @@ const getNormalWinSize = (
     }
 
     width = maxWidth / i;
-  }
-
-  if (tabLength !== i) {
-    /** 16 : 9 */
-    const aspectRatio = 0.5625;
-
-    height = width * aspectRatio + 39 + 140; // タイトルバー＋その他UI
   }
 
   return {
