@@ -4,6 +4,7 @@
  */
 export const gather = async (targets: number[]) => {
   const win = await chrome.windows.create({
+    state: 'maximized',
     focused: true,
   });
 
