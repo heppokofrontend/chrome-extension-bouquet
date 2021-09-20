@@ -59,10 +59,12 @@ export const windowOpen = (data: Data) => {
         // 別ウィンドウ化したタブを閉じる
         chrome.tabs.remove(tab.id);
 
+        // console.log({...state, ...screen});
+
         // 座標計算
         state.left += width;
 
-        if (maxWidth < state.left) {
+        if (maxWidth <= state.left) {
           state.left = 0;
           state.top += state.height;
         }
