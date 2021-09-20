@@ -70,7 +70,7 @@ export const windowOpen = (data: Data) => {
     const controller = await chrome.windows.create({
       url: './controller.html',
       type: 'popup',
-      width: 300,
+      width: 330,
       height: 290,
     });
 
