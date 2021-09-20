@@ -72,6 +72,7 @@ export const windowOpen = (data: Data) => {
       type: 'popup',
       width: 330,
       height: 290,
+      focused: true,
     });
 
     controller.alwaysOnTop = true;
