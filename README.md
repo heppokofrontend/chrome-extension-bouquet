@@ -15,7 +15,7 @@ Install it on your Google Chrome from here.
 
 [![Available in the Chrome Web Store](./images/iNEddTyWiMfLSwFD6qGq.png)](https://chrome.google.com/webstore/detail/apcgmjgoniiddekoelefocimfnhnkaah)
 
-## 使い方
+## How to use
 
 ![](./images/main--en.png)
 
