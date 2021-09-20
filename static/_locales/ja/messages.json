@@ -6,7 +6,7 @@
     "message": "現在のウィンドウのタブをバラバラにして画面内に敷き詰めます。"
   },
   "button": {
-    "message": "複窓"
+    "message": "複窓で開く"
   },
   "gather": {
     "message": "複窓解除"
