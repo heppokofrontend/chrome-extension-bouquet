@@ -25,8 +25,6 @@ export const addEvent = (windowId: number, calcRender: () => any) => {
         ...STATE,
       },
     });
-
-    calcRender();
   });
 
   // モード切り替えラジオボタンのChangeイベント
