@@ -94,24 +94,26 @@ p label {
 
 table {
   border-top: 1px solid #ddd;
-}
 
-th,
-td {
-  padding: 15px 0 0;
-}
+  th,
+  td {
+    padding: 15px 0 0;
+  }
 
-th {
-  color: #008080;
-  text-align: left;
-}
+  th {
+    color: #008080;
+    text-align: left;
+  }
 
-td {
-  width: 100%;
-  padding-left: 10px;
-  vertical-align: middle;
-
-  input {
+  td {
     width: 100%;
+    padding-left: 10px;
+    vertical-align: middle;
+
+    input {
+      width: 100%;
+      padding: 2px;
+      border-width: 0 0 1px;
+    }
   }
 }
