@@ -58,7 +58,7 @@ chrome.runtime.onConnect.addListener((port) => {
         break;
 
       default:
-        if (task.startsWith('youtube-')) {
+        if (task.startsWith('video-')) {
           for (const id of targets) {
             chrome.tabs.sendMessage(id, {
               task,

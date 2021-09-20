@@ -13,7 +13,7 @@ const btns = document.querySelectorAll<HTMLButtonElement>('main button');
  */
 const onclick = function(this: HTMLButtonElement) {
   port.postMessage({
-    task: `youtube-${this.id}`,
+    task: `video-${this.id}`,
   });
 };
 
@@ -31,7 +31,7 @@ volume?.addEventListener('change', () => {
   nowVolume.textContent = volume.value;
 
   port.postMessage({
-    task: 'youtube-volume',
+    task: 'video-volume',
     data: {
       volume: Number(volume.value) / 100,
     },

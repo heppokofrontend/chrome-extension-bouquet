@@ -36,8 +36,6 @@ export const windowOpen = (data: Data) => {
         Math.ceil(options.availHeight / rows) :
         Math.ceil(width * aspectRatio + 39 + 140), // タイトルバー＋その他UI
     };
-    /** YouTubeのタブを含んでいるか */
-    // const hasYoutubeTab = tabs.some((tab) => tab.url?.startsWith('https://www.youtube.com/watch'));
 
     // 複窓
     for (const tab of tabs) {
@@ -69,8 +67,6 @@ export const windowOpen = (data: Data) => {
       }
     }
 
-    // // YouTubeを含んでいたらコントローラーを表示する
-    // if (hasYoutubeTab) {
     const controller = await chrome.windows.create({
       url: './controller.html',
       type: 'popup',
@@ -79,6 +75,5 @@ export const windowOpen = (data: Data) => {
     });
 
     controller.alwaysOnTop = true;
-    // }
   })();
 };

@@ -1,13 +1,12 @@
 import {cssText} from './cssText';
-import {run} from './youtube-task';
+import {run} from './video-task';
 
 chrome.runtime.onMessage.addListener((message) => {
-  // YouTube窓用のタスク
-  if (document.URL.startsWith('https://www.youtube.com/watch')) {
-    switch (message.task) {
-      // workerから受け取ったwindowTypeがpopupだったとき、CSSを読み込む
-      case 'pageload':
-        // popupだった場合、調整のCSSを挿入する
+  switch (message.task) {
+    case 'pageload':
+      // YouTube窓用のタスク
+      if (document.URL.startsWith('https://www.youtube.com/watch')) {
+        // workerから受け取ったwindowTypeがpopupだったとき、CSSを読み込む
         if (message.windowType === 'popup') {
           const style = document.createElement('style');
 
@@ -15,21 +14,19 @@ chrome.runtime.onMessage.addListener((message) => {
           document.head.append(style);
         }
 
-        break;
+        window.scroll({
+          top: 0,
+        });
+      }
 
-      default:
-        if (message.task.startsWith('youtube-')) {
-          run(message.task, message.data);
-        }
+      break;
 
-        break;
-    }
-  }
+    default:
+      if (message.task.startsWith('video-')) {
+        run(message.task, message.data);
+      }
 
-  if (message.task === 'pageload') {
-    window.scroll({
-      top: 0,
-    });
+      break;
   }
 });
 
