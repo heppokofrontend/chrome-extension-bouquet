@@ -9,10 +9,14 @@ export const gather = async (targets: number[]) => {
   });
 
   for (const tabId of targets) {
-    chrome.tabs.move(tabId, {
-      index: -1,
-      windowId: win.id,
-    });
+    try {
+      chrome.tabs.move(tabId, {
+        index: -1,
+        windowId: win.id,
+      });
+    } catch {
+      // すでに閉じられている
+    }
   }
 
   if (win.tabs?.[0].id) {
