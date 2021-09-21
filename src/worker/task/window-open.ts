@@ -135,7 +135,7 @@ export const windowOpen = (data: Data) => {
           state.top += state.height;
         }
 
-        if (maxHeight < (state.top + state.height)) {
+        if (maxHeight < state.top + 100) { // 100は仮の閾値
           state.top = 0;
         }
       }
