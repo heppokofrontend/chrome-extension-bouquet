@@ -5,7 +5,7 @@ import '../i18n';
 chrome.storage.local.get(['type'], (data) => {
   const checkbox = document.querySelector<HTMLInputElement>(`#isPopup`)!;
 
-  STATE.type = data.type || 'normal';
+  STATE.type = data.type === 'popup' ? 'popup' : 'normal';
   checkbox.checked = STATE.type === 'popup';
 
   // CSS Transitionの有効化
