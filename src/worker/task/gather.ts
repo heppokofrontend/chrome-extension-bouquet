@@ -10,7 +10,7 @@ export const gather = async (targets: number[]) => {
 
   for (const tabId of targets) {
     try {
-      chrome.tabs.move(tabId, {
+      await chrome.tabs.move(tabId, {
         index: -1,
         windowId: win.id,
       });
